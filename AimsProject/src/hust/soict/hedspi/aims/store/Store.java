@@ -1,6 +1,8 @@
-package src;
+package hust.soict.hedspi.aims.store;
 
 import java.util.ArrayList;
+
+import hust.soict.hedspi.aims.disc.DigitalVideoDisc;
 
 public class Store {
     private ArrayList<DigitalVideoDisc> itemsInStore = new ArrayList<>();
