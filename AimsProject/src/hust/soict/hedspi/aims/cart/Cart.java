@@ -1,9 +1,10 @@
 package hust.soict.hedspi.aims.cart;
 import java.util.ArrayList;
+import hust.soict.hedspi.aims.disc.DigitalVideoDisc;
 
 public class Cart {
     public static final int MAX_NUMBERS_ORDERED = 20;
-    private ArrayList<DigitalVideoDisc> itemsOrdered = new ArrayList<>();
+    private ArrayList<DigitalVideoDisc> itemsOrdered = new ArrayList<DigitalVideoDisc>();
 
     public void addDigitalVideoDisc(DigitalVideoDisc disc) {
         if (itemsOrdered.size() < MAX_NUMBERS_ORDERED) {
