@@ -1,5 +1,7 @@
 package hust.soict.hedspi.aims.media;
 
+import java.util.Objects;
+
 public abstract class Media {
     
     private static int nbMedia = 0;
@@ -73,5 +75,20 @@ public abstract class Media {
     @Override
     public String toString() {
         return "ID: " + id + " - " + title + " - " + category + " - " + cost + "$";
+    }
+
+    // Overriding equals() method to compare Media objects based on title
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;  // Same object reference
+        if (obj == null || getClass() != obj.getClass()) return false;  // Null check and class check
+        Media media = (Media) obj;  // Cast the object to Media type
+        return title != null && title.equalsIgnoreCase(media.title);  // Compare titles
+    }
+
+    // Overriding hashCode() method for consistency with equals()
+    @Override
+    public int hashCode() {
+        return Objects.hash(title);  // Generate hashCode based on title
     }
 }
