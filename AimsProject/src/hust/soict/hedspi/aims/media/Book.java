@@ -1,77 +1,60 @@
 package hust.soict.hedspi.aims.media;
+
 import java.util.*;
 
-public class Book {
-    // Private fields
-    private int id;
-    private String title;
-    private String category;
-    private float cost;
-    private List<String> authors = new ArrayList<String>();
+public class Book extends Media {
+
+    private List<String> authors;
 
     // Constructor
-    public Book(int id, String title, String category, float cost) {
-        this.id = id;
-        this.title = title;
-        this.category = category;
-        this.cost = cost;
+    public Book(String title) {
+        super(title);
         this.authors = new ArrayList<>();
     }
 
-    // Getter and Setter methods for id, title, category, and cost
-    public int getId() {
-        return id;
+    public Book(String title, String category) {
+        super(title, category);
+        this.authors = new ArrayList<>();
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public Book(String title, String category, float cost) {
+        super(title, category, cost);
+        this.authors = new ArrayList<>();
     }
 
-    public String getTitle() {
-        return title;
+    // Getter and Setter for authors
+    public List<String> getAuthors() {
+        return authors;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setAuthors(List<String> authors) {
+        this.authors = authors;
     }
 
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public float getCost() {
-        return cost;
-    }
-
-    public void setCost(float cost) {
-        this.cost = cost;
-    }
-
-    // Add an author to the ArrayList (if not already present)
+    // Method to add an author to the book
     public void addAuthor(String authorName) {
         if (!authors.contains(authorName)) {
             authors.add(authorName);
+            System.out.println("Author '" + authorName + "' added successfully!");
         } else {
-            System.out.println("Author " + authorName + " is already in the list.");
+            System.out.println("The author '" + authorName + "' is already in the list.");
         }
     }
 
-    // Remove an author from the ArrayList (if present)
+    // Method to remove an author from the book
     public void removeAuthor(String authorName) {
         if (authors.contains(authorName)) {
             authors.remove(authorName);
+            System.out.println("Author '" + authorName + "' removed successfully!");
         } else {
-            System.out.println("Author " + authorName + " is not in the list.");
+            System.out.println("No author named '" + authorName + "' found to remove.");
         }
     }
 
-    // Get the list of authors (public method for reading the authors list)
-    public ArrayList<String> getAuthors() {
-        return authors;
+    // Override the toString method to display book details
+    @Override
+    public String toString() {
+        return "Book [ID: " + getId() + ", Title: " + getTitle() + ", Category: " + getCategory() + ", Cost: $" + getCost() +
+               ", Authors: " + String.join(", ", authors) + "]";
     }
 }
-
