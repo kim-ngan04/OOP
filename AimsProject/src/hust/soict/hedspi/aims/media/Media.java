@@ -65,6 +65,10 @@ public abstract class Media {
         this.id = ++nbMedia;
     }
     
+    public boolean isMatch(String title) {
+        return this.title != null && this.title.equalsIgnoreCase(title);
+    }
+    
     // toString method for displaying media information
     @Override
     public String toString() {
