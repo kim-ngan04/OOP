@@ -1,46 +1,50 @@
 package hust.soict.hedspi.aims.store;
 
+import hust.soict.hedspi.aims.media.Media;
+
 import java.util.ArrayList;
 
-import hust.soict.hedspi.aims.media.DigitalVideoDisc;
-
 public class Store {
-    private ArrayList<DigitalVideoDisc> itemsInStore = new ArrayList<>();
+    private ArrayList<Media> itemsInStore = new ArrayList<>();
 
-    public void addDVD(DigitalVideoDisc dvd) {
-        itemsInStore.add(dvd);
-        System.out.println("DVD \"" + dvd.getTitle() + "\" has been added to the store.");
+    // Thêm một Media vào kho
+    public void addMedia(Media media) {
+        itemsInStore.add(media);
+        System.out.println(media.getTitle() + " has been added to the store.");
     }
 
-    public void removeDVD(DigitalVideoDisc dvd) {
-        if (itemsInStore.remove(dvd)) {
-            System.out.println("DVD \"" + dvd.getTitle() + "\" has been removed from the store.");
+    // Xóa một Media khỏi kho
+    public void removeMedia(Media media) {
+        if (itemsInStore.remove(media)) {
+            System.out.println(media.getTitle() + " has been removed from the store.");
         } else {
-            System.out.println("DVD \"" + dvd.getTitle() + "\" is not found in the store.");
+            System.out.println(media.getTitle() + " is not found in the store.");
         }
     }
 
+    // Hiển thị danh sách các Media trong kho
     public void printStore() {
         System.out.println("***********************STORE***********************");
-        System.out.println("Available DVDs in the Store:");
+        System.out.println("Available Media in the Store:");
         for (int i = 0; i < itemsInStore.size(); i++) {
-            DigitalVideoDisc dvd = itemsInStore.get(i);
-            System.out.println((i + 1) + ". " + dvd);
+            Media media = itemsInStore.get(i);
+            System.out.println((i + 1) + ". " + media.toString());
         }
         System.out.println("***************************************************");
     }
 
+    // Tìm kiếm Media theo tiêu đề
     public void searchByTitle(String keyword) {
         boolean matchFound = false;
-        System.out.println("Searching for DVDs with \"" + keyword + "\" in the title:");
-        for (DigitalVideoDisc dvd : itemsInStore) {
-            if (dvd.isMatch(keyword)) {
-                System.out.println("Found: " + dvd);
+        System.out.println("Searching for Media with \"" + keyword + "\" in the title:");
+        for (Media media : itemsInStore) {
+            if (media.getTitle().toLowerCase().contains(keyword.toLowerCase())) {
+                System.out.println("Found: " + media);
                 matchFound = true;
             }
         }
         if (!matchFound) {
-            System.out.println("No DVDs found with \"" + keyword + "\" in the title.");
+            System.out.println("No Media found with \"" + keyword + "\" in the title.");
         }
     }
 }
