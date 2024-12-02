@@ -25,10 +25,19 @@ public class Track implements Playable {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof Track) {
-            Track other = (Track) obj;
-            return this.title.equalsIgnoreCase(other.getTitle()) && this.length == other.getLength();
-        }
-        return false;
+		if (obj == this) {
+			return true;
+		}
+		if(!(obj instanceof Track)) {
+			return false;
+		}
+		return ((Track)obj).getTitle() == this.getTitle() && ((Track)obj).getLength() == this.getLength();
+ 	}
+
+    @Override
+    public int hashCode() {
+        int result = title != null ? title.hashCode() : 0;
+        result = 31 * result + length;
+        return result;
     }
 }
