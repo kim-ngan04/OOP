@@ -1,10 +1,11 @@
 package hust.soict.hedspi.aims.cart;
 
 import hust.soict.hedspi.aims.media.Media;
-import java.util.ArrayList;
+import java.util.*;
 
 public class Cart {
     public static final int MAX_NUMBERS_ORDERED = 20;
+    public int qtyOrdered = 0;
     private ArrayList<Media> itemsOrdered = new ArrayList<>();
 
     // Add media to the cart
@@ -26,6 +27,18 @@ public class Cart {
             System.out.println("The media has been removed: " + media.getTitle());
         } else {
             System.out.println("The media is not found in the cart.");
+        }
+    }
+    
+    public void empty() {
+        if (itemsOrdered.size() == 0) {
+            System.out.println("Nothing to remove!");
+        } else {
+            qtyOrdered = 0;
+            itemsOrdered.clear();
+            System.out.println("Order created.");
+            System.out.println("Now your current cart will be empty!");
+            System.out.println();
         }
     }
 
@@ -74,6 +87,36 @@ public class Cart {
         }
         if (!found) {
             System.out.println("No media found with title: " + title);
+        }
+    }
+    
+ // Search to remove
+    public Media searchToRemove(String title) {
+		for (Media media : itemsOrdered) {
+			if (media.getTitle().equals(title)) {
+				return media;
+			}
+		}
+		return null;
+	}
+    
+ // Sort media in cart
+    public void sortMediaByTitle() {
+        Collections.sort((List<Media>)itemsOrdered, Media.COMPARE_BY_TITLE_COST);
+        Iterator<Media> iterator = itemsOrdered.iterator();
+        iterator = itemsOrdered.iterator();
+    
+        while (iterator.hasNext()) {
+            System.out.println(((Media)iterator.next()).toString());
+        }
+    }
+    public void sortMediaByCost() {
+        Collections.sort((List<Media>)itemsOrdered, Media.COMPARE_BY_COST_TITLE);
+        Iterator<Media> iterator = itemsOrdered.iterator();
+        iterator = itemsOrdered.iterator();
+    
+        while (iterator.hasNext()) {
+            System.out.println(((Media)iterator.next()).toString());
         }
     }
 }
