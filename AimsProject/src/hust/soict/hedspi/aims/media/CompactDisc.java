@@ -1,45 +1,39 @@
 package hust.soict.hedspi.aims.media;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class CompactDisc extends Disc {
-
+public class CompactDisc extends Disc implements Playable {
     private String artist;
-    private ArrayList<Track> tracks;  // List of tracks on the compact disc
+    private List<Track> tracks = new ArrayList<>();
 
-    // Constructor
-    public CompactDisc(String title, String category, String artist, float cost) {
-        super(title, category, "Unknown Director", 0, cost);
+    public CompactDisc(String title, String category, float cost, String artist) {
+        super(title, category, cost);
         this.artist = artist;
-        this.tracks = new ArrayList<>();
     }
 
-    // Getter method for artist
     public String getArtist() {
         return artist;
     }
 
-    // Method to add a track to the CD
     public void addTrack(Track track) {
-        if (!tracks.contains(track)) {
-            tracks.add(track);
-            System.out.println("Track added successfully!");
+        if (tracks.contains(track)) {
+            System.out.println("Track already exists in the CD.");
         } else {
-            System.out.println("This track is already in the list.");
+            tracks.add(track);
+            System.out.println("Track added successfully.");
         }
     }
 
-    // Method to remove a track from the CD
     public void removeTrack(Track track) {
         if (tracks.contains(track)) {
             tracks.remove(track);
-            System.out.println("Track removed successfully!");
+            System.out.println("Track removed successfully.");
         } else {
-            System.out.println("This track is not in the list.");
+            System.out.println("Track not found in the CD.");
         }
     }
 
-    // Method to get the total length of the CD (sum of all track lengths)
     public int getLength() {
         int totalLength = 0;
         for (Track track : tracks) {
@@ -48,13 +42,12 @@ public class CompactDisc extends Disc {
         return totalLength;
     }
 
-    // Override toString() to display CD details
     @Override
-    public String toString() {
-        return "CompactDisc: " + this.getTitle() +
-                " - Artist: " + this.artist +
-                " - Category: " + this.getCategory() +
-                " - Total Length: " + this.getLength() + " minutes" +
-                " - Cost: " + this.getCost() + "$";
+    public void play() {
+        System.out.println("Playing CD: " + this.getTitle());
+        System.out.println("Artist: " + this.artist);
+        for (Track track : tracks) {
+            track.play();
+        }
     }
 }
