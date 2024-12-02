@@ -46,6 +46,10 @@ public abstract class Media implements Comparable<Media> {
     public void setCost(float cost) {
         this.cost = cost;
     }
+    
+    public void play() {
+        System.out.println("Playing media");
+    }
 
     // Constructor with title only
     public Media(String title) {

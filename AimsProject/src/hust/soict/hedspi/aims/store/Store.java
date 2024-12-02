@@ -34,17 +34,12 @@ public class Store {
     }
 
     // Tìm kiếm Media theo tiêu đề
-    public void searchByTitle(String keyword) {
-        boolean matchFound = false;
-        System.out.println("Searching for Media with \"" + keyword + "\" in the title:");
-        for (Media media : itemsInStore) {
-            if (media.getTitle().toLowerCase().contains(keyword.toLowerCase())) {
-                System.out.println("Found: " + media);
-                matchFound = true;
-            }
-        }
-        if (!matchFound) {
-            System.out.println("No Media found with \"" + keyword + "\" in the title.");
-        }
-    }
+    public Media searchByTitle(String title) {
+    	for (Media media : itemsInStore) {
+			if (media.getTitle().equals(title)) {
+				return media;
+			}
+		}
+		return null;
+	}
 }
