@@ -21,6 +21,12 @@ public class Book extends Media {
         super(title, category, cost);
         this.authors = new ArrayList<>();
     }
+    
+    public Book(String title, String category, float cost, String author) {
+        super(title, category, cost);
+        this.authors = new ArrayList<>();
+        this.authors.add(author);
+    }
 
     // Getter and Setter for authors
     public List<String> getAuthors() {
