@@ -6,6 +6,9 @@ import java.util.ArrayList;
 
 public class Store {
     private ArrayList<Media> itemsInStore = new ArrayList<>();
+    public ArrayList<Media> getItemsInStore() {
+		return itemsInStore;
+	}
 
     // Thêm một Media vào kho
     public void addMedia(Media media) {
