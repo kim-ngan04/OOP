@@ -6,7 +6,10 @@ import java.util.*;
 public class Cart {
     public static final int MAX_NUMBERS_ORDERED = 20;
     public int qtyOrdered = 0;
-    private ArrayList<Media> itemsOrdered = new ArrayList<>();
+    private ObservableList<Media> itemsOrdered = FXCollections.observableArrayList();
+    public ObservableList<Media> getItemsOrdered() {
+		return itemsOrdered;
+	}
 
     // Add media to the cart
     public void addMedia(Media media) {
@@ -118,5 +121,15 @@ public class Cart {
         while (iterator.hasNext()) {
             System.out.println(((Media)iterator.next()).toString());
         }
+    }
+    
+    public String placeOrder() {
+    	if(itemsOrdered.size()==0) {
+    		return "Your cart is empty!";
+    	} else {
+    		qtyOrdered = 0;
+    		itemsOrdered.clear();
+    		return "Order created!\n" + "Now your cart will be empty!";
+    	}
     }
 }
