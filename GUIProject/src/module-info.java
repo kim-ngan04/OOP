@@ -1,3 +1,3 @@
-module hust.soict.hedspi.swing {
+module GUIProject {
     requires java.desktop;
 }
