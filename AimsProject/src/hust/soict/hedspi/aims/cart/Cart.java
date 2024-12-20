@@ -6,7 +6,10 @@ import java.util.*;
 public class Cart {
     public static final int MAX_NUMBERS_ORDERED = 20;
     public int qtyOrdered = 0;
-    private ArrayList<Media> itemsOrdered = new ArrayList<>();
+    private ObservableList<Media> itemsOrdered = FXCollections.observableArrayList();
+    public ObservableList<Media> getItemsOrdered() {
+		return itemsOrdered;
+	}
 
     // Add media to the cart
     public void addMedia(Media media) {
