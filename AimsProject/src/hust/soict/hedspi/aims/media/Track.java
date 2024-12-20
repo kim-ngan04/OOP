@@ -1,30 +1,48 @@
 package hust.soict.hedspi.aims.media;
 
+import java.time.Duration;
+
+import hust.soict.hedspi.aims.exception.PlayerException;
+
 public class Track implements Playable {
-    private String title;
-    private int length;
+	
+	private String title;
+	private int length;
+	
+	public String getTitle() {
+		return title;
+	}
 
-    public Track(String title, int length) {
-        this.title = title;
-        this.length = length;
+	public int getLength() {
+		return length;
+	}
+
+	public Track(String title, int length) {
+		this.title = title;
+		this.length = length;
+	}
+	
+	public void play() {
+		System.out.println("Playing track: " + this.getTitle());
+		System.out.println("Track length: " + this.getLength());
+	}
+	
+	public String formatDuration(int durationInSeconds) {
+        Duration duration = Duration.ofSeconds(durationInSeconds);
+        return String.format("%02d:%02d", duration.toMinutes(), duration.minusMinutes(duration.toMinutes()).getSeconds());
     }
-
-    public String getTitle() {
-        return title;
+	
+	public String playGUI() throws PlayerException {
+        if (this.getLength() > 0) {
+            return "Playing track: " + this.getTitle() + "\n" + 
+                "Track length: " + formatDuration(this.getLength());
+        } else {
+            throw new PlayerException("ERROR: Track length is non-positive!");
+        }
     }
-
-    public int getLength() {
-        return length;
-    }
-
-    @Override
-    public void play() {
-        System.out.println("Playing track: " + this.title);
-        System.out.println("Track length: " + this.length + " minutes");
-    }
-
-    @Override
-    public boolean equals(Object obj) {
+	
+	@Override
+	public boolean equals(Object obj) {
 		if (obj == this) {
 			return true;
 		}
@@ -33,11 +51,4 @@ public class Track implements Playable {
 		}
 		return ((Track)obj).getTitle() == this.getTitle() && ((Track)obj).getLength() == this.getLength();
  	}
-
-    @Override
-    public int hashCode() {
-        int result = title != null ? title.hashCode() : 0;
-        result = 31 * result + length;
-        return result;
-    }
 }
