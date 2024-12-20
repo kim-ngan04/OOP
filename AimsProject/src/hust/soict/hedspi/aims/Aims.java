@@ -1,66 +1,120 @@
 package hust.soict.hedspi.aims;
-
 import hust.soict.hedspi.aims.cart.Cart;
 import hust.soict.hedspi.aims.media.*;
 import hust.soict.hedspi.aims.store.Store;
 
-import java.util.Scanner;
+import java.util.*;
+
+import javax.naming.LimitExceededException;
 
 public class Aims {
-
-    private static Store store = new Store();
+	
+	private static Store store = new Store();
     private static Cart cart = new Cart();
-
-    // Clear Console
-    public static void clearConsole() {
-        try {
-            if (System.getProperty("os.name").contains("Windows")) {
-                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-            } else {
-                System.out.print("\033[H\033[2J");
-                System.out.flush();
-            }
-        } catch (Exception e) {
-            System.out.println("Failed to clear console.");
-        }
-    }
-
- // Init Store Setup
+    
+	public static void main(String[] args) {
+		
+		// Init add media to the store
+		initSetup();
+		
+		boolean exit = false;
+		
+		//CLI
+		
+		while (exit == false)
+		{
+			showMenu();
+			
+			Scanner scanner = new Scanner(System.in);
+			int option = scanner.nextInt();
+			scanner.nextLine();
+			
+			switch (option) {
+				case 0:
+					exit = true;
+					System.out.println("Good bye!");
+					break;
+				case 1:
+					clearConsole();
+					storeMenu(scanner);
+					break;
+				case 2:
+					clearConsole();
+					updateStoreMenu(scanner);
+					break;
+				case 3:
+					clearConsole();
+                    cartMenu(scanner);
+                    break;
+                default:
+                	clearConsole();
+                	System.out.println("Invalid option, please choose again.");
+                	break;
+			}
+		}
+		
+	}
+	
+	
+	// Clear Console
+	public static void clearConsole() {
+		for (int i=0; i<50; i++)
+		{
+			System.out.println();
+		}
+	}
+	
+	// init store setup 
     public static void initSetup() {
-        // Add DVDs
-        store.addMedia(new DigitalVideoDisc("The Lion King", "Animation", "Roger Allers", 87, 19.95f));
-        store.addMedia(new DigitalVideoDisc("Star War", "Science Fiction", "George Lucas", 87, 24.95f));
-        store.addMedia(new DigitalVideoDisc("Aladin", "Animation", 18.99f));
 
-        // Add Books
-        store.addMedia(new Book("The Valley of Fear", "Detective", 20.00f));
-        store.addMedia(new Book("A Living Remedy: A Memoir", "Biography", 202.00f));
-        store.addMedia(new Book("On the Origin of Time: Stephen Hawking's Final Theory", "Science", 120.00f));
+        DigitalVideoDisc dvd1 = new DigitalVideoDisc("The Lion King", "Animation", "Roger Allers", 87, 19.95f);     
+        DigitalVideoDisc dvd2 = new DigitalVideoDisc("Star War", "Science Fiction", "George Lucas", 87, 24.95f); 
+        DigitalVideoDisc dvd3 = new DigitalVideoDisc("Aladin", "Animation", 18.99f);
+        store.addMedia(dvd1);
+        store.addMedia(dvd2);
+        store.addMedia(dvd3);
 
-        // Add CDs
-        CompactDisc cd1 = new CompactDisc("Adele - 30", "Music",1500.98f, "Adele");
-        cd1.addTrack(new Track("All Night Parking (interlude)", 161));
-        cd1.addTrack(new Track("To Be Loved", 403));
-        cd1.addTrack(new Track("Woman Like Me", 300));
+    
+        Book book = new Book("The Valley of Fear", "Detective", 20.00f);
+        Book book1 = new Book("A Living Remedy: A Memoir", "Biography", 202.00f);
+        Book book2 = new Book("On the Origin of Time: Stephen Hawking's Final Theory", "Science", 120.00f);
+        store.addMedia(book);
+        store.addMedia(book1);
+        store.addMedia(book2);
+
+
+        CompactDisc cd1 = new CompactDisc("Adele - 30", "Music","Adele", 1500.98f);
+        Track track1CD1 = new Track("All Night Parking (interlude)", 161);
+        Track track2CD1 = new Track("To Be Loved", 403);
+        Track track3CD1 = new Track("Woman Like Me", 300);
+        cd1.addTrack(track1CD1);
+        cd1.addTrack(track2CD1);
+        cd1.addTrack(track3CD1);
+
+        CompactDisc cd2 = new CompactDisc("The Gods We Can Touch", "Music","Aurora", 2000.22f);
+        Track track1CD2 = new Track("Everything Matters", 180+34);
+        Track track2CD2 = new Track("Blood in the Wine", 180+30);
+        Track track3CD2 = new Track("Artemis", 60*2+39);
+        cd2.addTrack(track1CD2);
+        cd2.addTrack(track2CD2);
+        cd2.addTrack(track3CD2);
+
+        CompactDisc cd3 = new CompactDisc("Purpose", "Music","Justin Bieber", 1000.98f);
+        Track track1CD3 = new Track("The Feeling", 4*60+5);
+        Track track2CD3 = new Track("No Sense", 4*60+35);
+        cd3.addTrack(track1CD3);
+        cd3.addTrack(track2CD3);
+
         store.addMedia(cd1);
-
-        CompactDisc cd2 = new CompactDisc("The Gods We Can Touch", "Music", 2000.22f, "Aurora");
-        cd2.addTrack(new Track("Everything Matters", 214));
-        cd2.addTrack(new Track("Blood in the Wine", 210));
-        cd2.addTrack(new Track("Artemis", 159));
         store.addMedia(cd2);
-
-        CompactDisc cd3 = new CompactDisc("Purpose", "Music",1000.98f, "Justin Bieber");
-        cd3.addTrack(new Track("The Feeling", 245));
-        cd3.addTrack(new Track("No Sense", 275));
         store.addMedia(cd3);
-
+        
         clearConsole();
     }
-
+    
     // Show menu
     public static void showMenu() {
-        System.out.println("AIMS:");
+        System.out.println("AIMS: ");
         System.out.println("--------------------------------");
         System.out.println("1. View store");
         System.out.println("2. Update store");
@@ -74,7 +128,7 @@ public class Aims {
     	boolean back = false;
     	while(back == false)
     	{
-    		store.printStore();
+    		store.print();
     		
     		System.out.println("Options: ");
             System.out.println("--------------------------------");
@@ -103,7 +157,7 @@ public class Aims {
                             clearConsole();
                             break;
                         }
-                        Media media = store.searchByTitle(title);
+                        Media media = store.search(title);
                         if (media != null) {
                             clearConsole();
                             System.out.println("Details: ");
@@ -124,9 +178,13 @@ public class Aims {
                             clearConsole();
                             break;
                         }
-                        Media media = store.searchByTitle(title);
+                        Media media = store.search(title);
                         if (media != null) {
-                            cart.addMedia(media);
+                        	try {
+                                cart.addMedia(media);
+                            } catch (LimitExceededException e) {
+                                e.printStackTrace();
+                            }
                             foundToAdd = true;
                         } else {
                             System.out.println("***MEDIA NOT FOUND***");
@@ -142,7 +200,7 @@ public class Aims {
                             clearConsole();
                             break;
                         }
-                        Media media = store.searchByTitle(title);
+                        Media media = store.search(title);
                         if (media != null) {
                             if (media instanceof Disc || media instanceof CompactDisc) {
                                 media.play();
@@ -188,7 +246,11 @@ public class Aims {
                     back = true;
                     break;
                 case 1:
-                    cart.addMedia(media);
+                	try {
+                        cart.addMedia(media);
+                    } catch (LimitExceededException e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case 2:
                     if (media instanceof Disc || media instanceof CompactDisc) {
@@ -241,7 +303,7 @@ public class Aims {
                                 clearConsole();
                                 break;
                             }
-                            cart.searchById(id);
+                            cart.searchByID(id);
                             found = true;
                         } else if (filterOption == 2) {
                             System.out.println("Enter the title to filter (type 0 to stop):");
@@ -300,7 +362,7 @@ public class Aims {
                             clearConsole();
                             break;
                         }
-                        Media media = store.searchByTitle(title);
+                        Media media = store.search(title);
                         if (media != null) {
                             if (media instanceof Disc || media instanceof CompactDisc) {
                                 media.play();
@@ -370,7 +432,7 @@ public class Aims {
                         Float cdCost = scanner.nextFloat();
                         scanner.nextLine();
 
-                        CompactDisc newCD = new CompactDisc(cdTitle, cdCategory, cdCost, cdArtist);
+                        CompactDisc newCD = new CompactDisc(cdTitle, cdCategory, cdArtist, cdCost);
 
                         
                         System.out.println("Do you want to add tracks to your CD? (1) Yes (0) No:");
@@ -423,7 +485,7 @@ public class Aims {
                             clearConsole();
                             break;
                         }
-                        Media media = store.searchByTitle(titleForRemove);
+                        Media media = store.search(titleForRemove);
                         if (media != null) {
                             clearConsole();
                             store.removeMedia(media);
@@ -440,40 +502,4 @@ public class Aims {
             }
         }
     }
-
-    public static void main(String[] args) {
-        initSetup();
-        try (Scanner scanner = new Scanner(System.in)) {
-            boolean exit = false;
-            while (!exit) {
-                showMenu();
-                try {
-                    int option = scanner.nextInt();
-                    scanner.nextLine();
-                    clearConsole();
-                    switch (option) {
-                        case 0:
-                            exit = true;
-                            System.out.println("Goodbye!");
-                            break;
-                        case 1:
-                            storeMenu(scanner);
-                            break;
-                        case 2:
-                            updateStoreMenu(scanner);
-                            break;
-                        case 3:
-                            cartMenu(scanner);
-                            break;
-                        default:
-                            System.out.println("Invalid option. Please try again.");
-                    }
-                } catch (Exception e) {
-                    scanner.nextLine(); // Clear invalid input
-                    System.out.println("Invalid input. Please enter a number.");
-                }
-            }
-        }
-    }
-
 }
